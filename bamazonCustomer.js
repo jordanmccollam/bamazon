@@ -22,15 +22,15 @@ function displayProducts() {
 
             console.log("\nPRODUCTS *********************************");
             for (var i = 0; i < res.length; i++) {
-                console.log("\n" + res[i].item_id  + ". " + res[i].product_name);
-                console.log("$" + res[i].price + "\n");
+                console.log("\n" + res[i].item_id  + ". " + res[i].product_name + " || $" + res[i].price);
             }
-            console.log("******************************************");
+            console.log("\n******************************************");
+            promptCustomer();
         }
     )
 }
 
-function prompt() {
+function promptCustomer() {
     inquirer.prompt([{
             type: "input",
             message: "What's the ID of the item you would like to buy?",
