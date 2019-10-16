@@ -5,3 +5,13 @@ This is a mock Amazon CLI app. As a customer you can purchase items. And as a ma
 ## Purpose
 The purpose of this app is to demonstrate skills in Node and in MySQL
 
+## Screenshots
+Here is the app in action!
+
+![Screenshot](screenshots/screenshot1.png)
+![Screenshot](screenshots/screenshot2.png)
+![Screenshot](screenshots/screenshot3.png)
+![Screenshot](screenshots/screenshot4.png)
+![Screenshot](screenshots/screenshot5.png)
+
+
