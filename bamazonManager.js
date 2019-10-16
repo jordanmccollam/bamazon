@@ -29,6 +29,12 @@ function prompt() {
             case "View Low Inventory":
                 viewLowInventory();
                 break;
+            case "Add to Inventory":
+                getCurrentStock();
+                break;
+            case "Add New Product":
+                addNewProduct();
+                break;
         }
 
     })
@@ -72,4 +78,66 @@ function viewLowInventory() {
         }
     )
     connection.end();
+}
+
+function getCurrentStock() {
+    inquirer.prompt([{
+            type: "input",
+            message: "Which product(ID) would you like to add to?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "How many units would you like to add?",
+            name: "units"
+        }
+    ]).then(answers => {
+        connection.query(
+            "SELECT * FROM products WHERE item_id = ?", [answers.id],
+            function (err, res) {
+                if (err) throw err;
+
+                var currentStock = res[0].stock_quantity;
+                addToInventory(currentStock, answers.id, answers.units);
+            }
+        )
+    })
+}
+
+function addToInventory(currentStock, id, units) {
+    connection.query(
+        "UPDATE products SET stock_quantity = ? WHERE item_id = ?", [parseInt(currentStock) + parseInt(units), id]
+    )
+    console.log("Updated Inventory!");
+    connection.end();
+}
+
+function addNewProduct() {
+    inquirer.prompt([{
+            type: "input",
+            message: "Product Name:",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "Department:",
+            name: "department"
+        },
+        {
+            type: "input",
+            message: "Price:",
+            name: "price"
+        },
+        {
+            type: "input",
+            message: "Quantity:",
+            name: "quantity"
+        }
+    ]).then(answers => {
+        connection.query(
+            "INSERT INTO products(product_name, department_name, price, stock_quantity) VALUES(?, ?, ?, ?)", [answers.name, answers.department, parseFloat(answers.price), parseFloat(answers.quantity)]
+        )
+        console.log("Product Added!");
+        connection.end();
+    })
 }
